@@ -2,13 +2,13 @@
 # [Rental Mobil]
 # ===================================
 # Developed by. Athiyyah Nisrina Husna
-# JCDS - [Class Batch]
+
 
 
 # /************************************/
 
 # /===== Data Model =====/
-# Create your data model here
+
 car_data = [
     {"id": 1, "merk": "Toyota", "model": "Avanza", "license_plate": "B 1234 EFT ", "daily_rate": 500_000, 
 "availability": True},
@@ -21,7 +21,7 @@ car_data = [
     ]
 
 
-# FUNCTIN TAMBAHAN
+# FUNCTION TAMBAHAN
 import re
 
 def format_rupiah(amount):#Format angka ke rupiah    
