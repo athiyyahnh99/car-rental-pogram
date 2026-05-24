@@ -391,8 +391,7 @@ def update_car():
     else:
         found.update(data_lama)
         print("Update dibatalkan.")
-    
-       
+           
 running = True
 while running:
     choice = main_menu()
