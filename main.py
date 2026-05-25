@@ -31,14 +31,14 @@ def format_rupiah(amount):#Format angka ke rupiah
 def print_header(title): #Cetak header dengan garis pembatas
     line = "=" * 60
     print(f"\n{line}")
-    print(f"  {title}")
+    print(f"{title}")
     print(line)
  
  
 def print_car_table(cars: list):
     
     if not cars:
-        print("  (Tidak ada data mobil yang ditampilkan)")
+        print("(Tidak ada data mobil yang ditampilkan)")
         return
  
     # Lebar tiap kolom
@@ -63,12 +63,12 @@ def print_car_table(cars: list):
         )
  
     print(border)
-    print(f"  Total: {len(cars)} mobil\n")
+    print(f"Total: {len(cars)} mobil\n")
 
 
 
 # MENU FUNCTION
-def main_menu():
+def main_menu(): # Menu Utama
     print("\n=== SELAMAT DATANG DI APLIKASI RENTAL MOBIL ===")
     print("Silahkan pilih menu: ")
     print("1. Menampilkan daftar mobil")
@@ -116,32 +116,32 @@ def view_all():
     # Tampilkan semua mobil
     print_car_table(car_data)
  
-    print("Filter tampilan:")
+    print("Filter tampilan:") # filter berdasarkan availability
     print("1. Hanya mobil tersedia")
     print("2. Hanya mobil sedang disewa")
     choose = input("Pilih filter [1/2] atau Enter untuk skip: ").strip()
  
     if choose == "1":
-        hasil = [c for c in car_data if c["availability"]]
+        result = [c for c in car_data if c["availability"]]
         print_header("MOBIL TERSEDIA")
-        print_car_table(hasil)
+        print_car_table(result)
     elif choose == "2":
-        hasil = [c for c in car_data if not c["availability"]]
+        result = [c for c in car_data if not c["availability"]]
         print_header("MOBIL SEDANG DISEWA")
-        print_car_table(hasil)
+        print_car_table(result)
     elif choose == "":
         pass
     else:
         print("\n  Pilihan tidak valid.")
 
 
-def search_car(): 
+def search_car(): # pencarian mobil
     print_header("CARI MOBIL")
  
     keyword = input("Masukkan nama merk mobil yang dicari: ").strip().lower()
  
     if not keyword:
-        print("\n  Keyword tidak boleh kosong.")
+        print("\nKeyword tidak boleh kosong.")
         return
  
     result = [
@@ -156,7 +156,7 @@ def search_car():
     else:
         print("Tidak ada mobil yang sesuai dengan pencarian Anda.\n")
 
-def add_car():
+def add_car(): # Menambahakan data mobil
     print_header("TAMBAH DATA MOBIL")
 
     while True:
@@ -176,8 +176,8 @@ def add_car():
     # validasi license plate
     while True:
         license_plate = input("Masukkan plat nomor (contoh: B 1234 ABC): ").strip().upper()
-        if not re.fullmatch(r"[A-Z]{1,2} \d{1,4} [A-Z]{1,3}", license_plate):
-            print("  Format plat tidak valid! Contoh yang benar: B 1234 ABC")
+        if not re.fullmatch(r"[A-Z]{1,2} \d{1,4} [A-Z]{1,3}", license_plate): # agar format license_plate sesuai
+            print("Format plat tidak valid! Contoh yang benar: B 1234 ABC")
         else:
             duplicate = False
             for c in car_data:
@@ -185,7 +185,7 @@ def add_car():
                     duplicate = True
                     break
             if duplicate:
-                print("  Plat nomor sudah terdaftar! Masukkan plat nomor lain.")
+                print("Plat nomor sudah terdaftar! Masukkan plat nomor lain.")
             else:
                 break
     
@@ -230,7 +230,7 @@ def add_car():
     else:
         print("Mobil batal ditambahkan")
        
-def delete_car():
+def delete_car(): # menghapus data mobil
     print_car_table(car_data)
     while True:
         index_input = input("Masukkan index mobil yang ingin dihapus: ").strip()
@@ -239,7 +239,8 @@ def delete_car():
             break
         else:
             print("Index harus berupa angka!")
-            
+    
+    # mengecek jika input yang dimasukkan sesuai        
     if 1 <= index_delete <= len(car_data):
         deleted = car_data[index_delete - 1]
         print(f"\nMobil yang akan dihapus:")
@@ -254,7 +255,7 @@ def delete_car():
     else: 
         print("index tidak valid!")      
     
-def update_car():
+def update_car(): # mengupdate/mengganti data mobil yang sudah ada
     print_car_table(car_data)
     
     while True: # pilih cara pencarian
@@ -267,42 +268,42 @@ def update_car():
         found = None
         if search_choice == "1":
             keyword = input("Masukkan merk mobil: ").strip().lower()
-            hasil = [c for c in car_data if c["merk"].lower() == keyword]
+            result = [c for c in car_data if c["merk"].lower() == keyword]
 
         elif search_choice == "2":
             keyword = input("Masukkan model mobil: ").strip().lower()
-            hasil = [c for c in car_data if c["model"].lower() == keyword]
+            result = [c for c in car_data if c["model"].lower() == keyword]
 
         elif search_choice == "3":
             keyword = input("Masukkan plat nomor: ").strip().upper()
-            hasil = [c for c in car_data if c["license_plate"].strip() == keyword]
+            result = [c for c in car_data if c["license_plate"].strip() == keyword]
         
         else:
             print("Pilihan tidak valid, masukkan 1-3!")
             continue
 
-        if not hasil:
+        if not result:
             print("Mobil tidak ditemukan! Coba lagi.")
             continue
 
         # jika hasil lebih dari 1, tampilkan dan minta user pilih
-        if len(hasil) == 1:
-            found = hasil[0]
+        if len(result) == 1:
+            found = result[0]
             break
         else:
             print("\nDitemukan lebih dari 1 mobil:")
-            print_car_table(hasil)
+            print_car_table(result)
             while True:
-                pilih_input = input(f"Pilih nomor mobil (1-{len(hasil)}): ").strip()
-                if pilih_input.isdigit() and 1 <= int(pilih_input) <= len(hasil):
-                    found = hasil[int(pilih_input) - 1]
+                input_choice = input(f"Pilih nomor mobil (1-{len(hasil)}): ").strip()
+                if input_choice.isdigit() and 1 <= int(input_choice) <= len(result):
+                    found = result[int(input_choice) - 1]
                     break
                 else:
                     print(f"Pilihan tidak valid! Masukkan 1-{len(hasil)}.")
             break
    
     # data lama disimpan
-    data_lama = found.copy()
+    old_data = found.copy()
     
     # pilih bagian yang ingin diupdate
     while True:
@@ -312,57 +313,57 @@ def update_car():
         print("3. Plat Nomor")
         print("4. Tarif Harian")
         print("5. Status Ketersediaan")
-        pilihan = input("Pilih (1-5): ").strip()
+        choices = input("Pilih (1-5): ").strip()
         
-        if pilihan == "1":
+        if choices == "1":
             while True:
-                merk_baru = input("Masukkan merk baru: ").strip()
-                if merk_baru:
-                    found["merk"] = merk_baru
+                new_merk = input("Masukkan merk baru: ").strip()
+                if new_merk:
+                    found["merk"] = new_merk
                     break
                 else:
-                    print("  Merk tidak boleh kosong!")
+                    print("Merk tidak boleh kosong!")
                     break
     
-        elif pilihan == "2":
+        elif choices== "2":
             while True:
-                model_baru = input("Masukkan model baru: ").strip()
-                if model_baru:
-                    found["model"] = model_baru
+                new_model = input("Masukkan model baru: ").strip()
+                if new_model:
+                    found["model"] = new_model
                     break
                 else:
-                    print("  Model tidak boleh kosong!")
+                    print("Model tidak boleh kosong!")
             break
         
-        elif pilihan == "3":
+        elif choices == "3":
             while True:
-                plat_baru = input("Masukkan plat nomor baru (contoh: B 1234 ABC): ").strip().upper()
-                if not re.fullmatch(r"[A-Z]{1,2} \d{1,4} [A-Z]{1,3}", plat_baru):
+                new_license_plate = input("Masukkan plat nomor baru (contoh: B 1234 ABC): ").strip().upper()
+                if not re.fullmatch(r"[A-Z]{1,2} \d{1,4} [A-Z]{1,3}", new_license_plate): 
                     print("Format plat tidak valid!")
                 else:
                     duplicate = False
                     for c in car_data:
-                        if c["license_plate"] == plat_baru:
+                        if c["license_plate"] == new_license_plate:
                             duplicate = True
                             break
                     if duplicate:
                         print("Plat nomor sudah terdaftar!")
                     else:
-                        found["license_plate"] = plat_baru
+                        found["license_plate"] = new_license_plate
                         break
             break
         
-        elif pilihan == "4":
+        elif choices == "4":
             while True:
-                tarif_baru = input("Masukkan tarif harian baru (Rp): ").strip()
-                if tarif_baru.isdigit():
-                    found["daily_rate"] = int(tarif_baru)
+                new_price = input("Masukkan tarif harian baru (Rp): ").strip()
+                if new_price.isdigit():
+                    found["daily_rate"] = int(new_price)
                     break
                 else:
-                    print("  Tarif harus berupa angka!")
+                    print("Tarif harus berupa angka!")
             break
         
-        elif pilihan == "5":
+        elif choices == "5":
             while True:
                 print("Status ketersediaan:")
                 print("1. Tersedia")
@@ -386,10 +387,10 @@ def update_car():
     print_car_table([found])
     confirm = input("Yakin ingin menyimpan perubahan? (y/n): ").strip().lower()
     if confirm == "y":
-        print(f"  '{found['merk']} {found['model']}' berhasil diupdate!")
+        print(f"'{found['merk']} {found['model']}' berhasil diupdate!")
         print_car_table(car_data)
     else:
-        found.update(data_lama)
+        found.update(old_data)
         print("Update dibatalkan.")
            
 running = True
@@ -404,7 +405,7 @@ while running:
             elif submenu == "2":
                 search_car()
             elif submenu == "3":
-                break  # kembali ke menu utama
+                break
             else:
                 print("\nPilihan tidak ada di dalam menu\n")
 
