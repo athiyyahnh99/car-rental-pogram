@@ -294,12 +294,12 @@ def update_car(): # mengupdate/mengganti data mobil yang sudah ada
             print("\nDitemukan lebih dari 1 mobil:")
             print_car_table(result)
             while True:
-                input_choice = input(f"Pilih nomor mobil (1-{len(hasil)}): ").strip()
+                input_choice = input(f"Pilih nomor mobil (1-{len(result)}): ").strip()
                 if input_choice.isdigit() and 1 <= int(input_choice) <= len(result):
                     found = result[int(input_choice) - 1]
                     break
                 else:
-                    print(f"Pilihan tidak valid! Masukkan 1-{len(hasil)}.")
+                    print(f"Pilihan tidak valid! Masukkan 1-{len(result)}.")
             break
    
     # data lama disimpan
